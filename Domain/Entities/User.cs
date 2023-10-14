@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class User
+    public class Usuario : BaseEntity
     {
-        
+        public string Nombre {get; set;}
+        public string Correo {get; set;}
+        public string Password {get; set;}
     }
 }

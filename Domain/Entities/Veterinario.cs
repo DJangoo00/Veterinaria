@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Veterinario
+    public class Veterinario : BaseEntity
     {
-        
+        public string Nombre {get; set;}
+        public string CorreoElectronico {get; set;}
+        public string Telefono {get; set;}
+        public string Especialidad {get; set;}
     }
 }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class TipoMovimiento
+    public class TipoMovimiento : BaseEntity
     {
-        
+        public string Descripcion {get; set;}
     }
 }

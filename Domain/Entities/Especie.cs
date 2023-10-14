@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Especie
+    public class Especie : BaseEntity
     {
-        
+        public string Nombre {get; set;}
     }
 }

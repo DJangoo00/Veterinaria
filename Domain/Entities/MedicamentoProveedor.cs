@@ -7,6 +7,7 @@ namespace Domain.Entities
 {
     public class MedicamentoProveedor
     {
-        
+        public int IdMedicamento {get; set;}
+        public int IdProveedor {get; set;}
     }
 }
