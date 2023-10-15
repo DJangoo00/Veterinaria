@@ -11,5 +11,6 @@ namespace Domain.Entities
         public string CorreoElectronico {get; set;}
         public string Telefono {get; set;}
         public string Especialidad {get; set;}
+        public ICollection<Cita> Citas {get; set;}
     }
 }

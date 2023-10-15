@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace Domain.Entities;
 
-namespace Domain.Entities
+public class Raza : BaseEntity
 {
-    public class Raza : BaseEntity
-    {
-        public int IdEspecieFk {get; set;}
-        public string Nombre {get; set;}
-        
-    }
+    public int IdEspecieFk { get; set; }
+    public Especie Especie { get; set; }
+    public string Nombre { get; set; }
+    public ICollection<Mascota> Mascotas { get; set; }
 }
