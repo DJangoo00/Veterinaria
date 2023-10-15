@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Domain.Interfaces;
 using Persistence;
-namespace Aplicacion.Repository;
+namespace App.Repository;
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
     private readonly ApiContext _context;

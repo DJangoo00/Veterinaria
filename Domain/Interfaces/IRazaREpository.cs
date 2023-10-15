@@ -1,7 +1,7 @@
 using Domain.Entities;
 
 namespace Domain.Interfaces;
-public interface IRazaREpository : IGenericRepository<Raza>
+public interface IRazaRepository : IGenericRepository<Raza>
 {
     
 }
