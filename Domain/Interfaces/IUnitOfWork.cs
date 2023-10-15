@@ -6,9 +6,9 @@ public interface IUnitOfWork
 {
     ICitaRepository Citas { get; }
     IDetalleMovimientoRepository DetallesMovimientos { get; }
-    IEspecieRepository Especie { get; }
-    ILaboratorioRepository Laboratorio { get; }
-    IMascotaRepository Mascota { get; }
+    IEspecieRepository Especies { get; }
+    ILaboratorioRepository Laboratorios { get; }
+    IMascotaRepository Mascotas { get; }
     IMedicamentoRepository Medicamentos { get; }
     IMovimientoMedicamentoRepository MovimientosMedicamentos { get; }
     IPropietarioRepository Propietarios { get; }

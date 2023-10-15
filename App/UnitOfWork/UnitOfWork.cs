@@ -12,7 +12,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private LaboratorioRepository _laboratorios;
     private MascotaRepository _mascotas;
     private MedicamentoRepository _medicamentos;
-    private MovimientoMedicamentoRepository _movimientoMedicamentos;
+    private MovimientoMedicamentoRepository _movimientosMedicamentos;
     private PropietarioRepository _propietarios;
     private ProveedorRepository _proveedores;
     private RazaRepository _razas;
@@ -26,7 +26,6 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         _context = context;
     }
 
-    //completar
     public ICitaRepository Citas
     {
         get
@@ -93,15 +92,15 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             return _medicamentos;
         }
     }
-    public IMovimientoMedicamentoRepository MovimientoMedicamentos
+    public IMovimientoMedicamentoRepository MovimientosMedicamentos
     {
         get
         {
-            if (_movimientoMedicamentos == null)
+            if (_movimientosMedicamentos == null)
             {
-                _movimientoMedicamentos = new MovimientoMedicamentoRepository(_context);
+                _movimientosMedicamentos = new MovimientoMedicamentoRepository(_context);
             }
-            return _movimientoMedicamentos;
+            return _movimientosMedicamentos;
         }
     }
     public IPropietarioRepository Propietarios
@@ -196,11 +195,15 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         }
     }
 
+    public int Save()
+    {
+        return _context.SaveChanges();
+    }
+
     public async Task<int> SaveAsync()
     {
         return await _context.SaveChangesAsync();
     }
-
     public void Dispose()
     {
         _context.Dispose();

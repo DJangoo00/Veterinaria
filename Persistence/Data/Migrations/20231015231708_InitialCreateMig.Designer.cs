@@ -11,7 +11,7 @@ using Persistence;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20231015012337_InitialCreateMig")]
+    [Migration("20231015231708_InitialCreateMig")]
     partial class InitialCreateMig
     {
         /// <inheritdoc />
@@ -352,11 +352,11 @@ namespace Persistence.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar")
-                        .HasColumnName("rolName");
+                        .HasColumnName("roleName");
 
                     b.HasKey("Id");
 
-                    b.ToTable("rol", (string)null);
+                    b.ToTable("role", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RoleUser", b =>
@@ -371,7 +371,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdUserFk");
 
-                    b.ToTable("userRol", (string)null);
+                    b.ToTable("userrole", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoMovimiento", b =>

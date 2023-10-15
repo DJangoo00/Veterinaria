@@ -88,17 +88,17 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "rol",
+                name: "role",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    rolName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    roleName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_rol", x => x.Id);
+                    table.PrimaryKey("PK_role", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -229,7 +229,7 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "userRol",
+                name: "userrole",
                 columns: table => new
                 {
                     IdUserFk = table.Column<int>(type: "int", nullable: false),
@@ -237,15 +237,15 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_userRol", x => new { x.IdRoleFk, x.IdUserFk });
+                    table.PrimaryKey("PK_userrole", x => new { x.IdRoleFk, x.IdUserFk });
                     table.ForeignKey(
-                        name: "FK_userRol_rol_IdRoleFk",
+                        name: "FK_userrole_role_IdRoleFk",
                         column: x => x.IdRoleFk,
-                        principalTable: "rol",
+                        principalTable: "role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_userRol_user_IdUserFk",
+                        name: "FK_userrole_user_IdUserFk",
                         column: x => x.IdUserFk,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -535,8 +535,8 @@ namespace Persistence.Data.Migrations
                 column: "IdMedicamentoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_userRol_IdUserFk",
-                table: "userRol",
+                name: "IX_userrole_IdUserFk",
+                table: "userrole",
                 column: "IdUserFk");
         }
 
@@ -556,7 +556,7 @@ namespace Persistence.Data.Migrations
                 name: "tratamientoMedico");
 
             migrationBuilder.DropTable(
-                name: "userRol");
+                name: "userrole");
 
             migrationBuilder.DropTable(
                 name: "movimientoMedicamento");
@@ -568,7 +568,7 @@ namespace Persistence.Data.Migrations
                 name: "cita");
 
             migrationBuilder.DropTable(
-                name: "rol");
+                name: "role");
 
             migrationBuilder.DropTable(
                 name: "medicamento");

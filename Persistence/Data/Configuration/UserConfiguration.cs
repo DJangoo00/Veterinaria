@@ -44,7 +44,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasForeignKey(el => el.IdUserFk),
             j =>
                 {
-                    j.ToTable("userRol");
+                    j.ToTable("userrole");
                     j.HasKey(t => new { t.IdRoleFk, t.IdUserFk });
                 });
 
