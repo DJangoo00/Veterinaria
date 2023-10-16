@@ -17,12 +17,14 @@ public class RazaRepository : GenericRepository<Raza>, IRazaRepository
     public override async Task<IEnumerable<Raza>> GetAllAsync()
     {
         return await _context.Razas
+            .Include(c => c.Especie)
             .ToListAsync();
     }
 
     public override async Task<Raza> GetByIdAsync(int id)
     {
         return await _context.Razas
+            .Include(c => c.Especie)
             .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 }

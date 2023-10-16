@@ -17,12 +17,18 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascotaRepository
     public override async Task<IEnumerable<Mascota>> GetAllAsync()
     {
         return await _context.Mascotas
+            .Include(c => c.Propietario)
+            .Include(c => c.Especie)
+            .Include(c => c.Raza)
             .ToListAsync();
     }
 
     public override async Task<Mascota> GetByIdAsync(int id)
     {
         return await _context.Mascotas
+            .Include(c => c.Propietario)
+            .Include(c => c.Especie)
+            .Include(c => c.Raza)
             .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 }

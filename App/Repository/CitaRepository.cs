@@ -17,12 +17,16 @@ public class CitaRepository : GenericRepository<Cita>, ICitaRepository
     public override async Task<IEnumerable<Cita>> GetAllAsync()
     {
         return await _context.Citas
+            .Include(c => c.Mascota)
+            .Include(c => c.Veterinario)
             .ToListAsync();
     }
 
     public override async Task<Cita> GetByIdAsync(int id)
     {
         return await _context.Citas
+            .Include(c => c.Mascota)
+            .Include(c => c.Veterinario)
             .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 }

@@ -6,4 +6,5 @@ public class MedicamentoDto : BaseEntity
     public int CantidadDisponible { get; set; }
     public int Precio { get; set; }
     public int IdLaboratorioFk { get; set; }
+    public LaboratorioDto Laboratorio { get; set; }
 }

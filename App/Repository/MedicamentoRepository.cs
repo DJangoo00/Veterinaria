@@ -17,12 +17,14 @@ public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicament
     public override async Task<IEnumerable<Medicamento>> GetAllAsync()
     {
         return await _context.Medicamentos
+            .Include(c => c.Laboratorio)
             .ToListAsync();
     }
 
     public override async Task<Medicamento> GetByIdAsync(int id)
     {
         return await _context.Medicamentos
+            .Include(c => c.Laboratorio)
             .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 }
