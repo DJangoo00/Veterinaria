@@ -29,7 +29,7 @@ namespace Persistencia.Data.Configuration
 
             builder.HasOne(p => p.Especie)
             .WithMany(p => p.Mascotas)
-            .HasForeignKey(p => p.IdEpecieFk);
+            .HasForeignKey(p => p.IdEspecieFk);
 
             builder.HasOne(p => p.Raza)
             .WithMany(p => p.Mascotas)

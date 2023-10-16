@@ -3,7 +3,7 @@ public class Mascota : BaseEntity
 {
     public int IdPropietarioFk { get; set; }
     public Propietario Propietario { get; set; }
-    public int IdEpecieFk { get; set; }
+    public int IdEspecieFk { get; set; }
     public Especie Especie { get; set; }
     public int IdRazaFk { get; set; }
     public Raza Raza { get; set; }

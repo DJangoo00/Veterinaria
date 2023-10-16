@@ -131,7 +131,7 @@ namespace Persistence.Data.Migrations
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("date");
 
-                    b.Property<int>("IdEpecieFk")
+                    b.Property<int>("IdEspecieFk")
                         .HasColumnType("int");
 
                     b.Property<int>("IdPropietarioFk")
@@ -147,7 +147,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEpecieFk");
+                    b.HasIndex("IdEspecieFk");
 
                     b.HasIndex("IdPropietarioFk");
 
@@ -218,9 +218,6 @@ namespace Persistence.Data.Migrations
                     b.Property<int>("IdUserFk")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MedicamentoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Total")
                         .HasMaxLength(7)
                         .HasColumnType("int");
@@ -232,8 +229,6 @@ namespace Persistence.Data.Migrations
                     b.HasIndex("IdTipMovFk");
 
                     b.HasIndex("IdUserFk");
-
-                    b.HasIndex("MedicamentoId");
 
                     b.ToTable("movimientoMedicamento", (string)null);
                 });
@@ -520,7 +515,7 @@ namespace Persistence.Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Especie", "Especie")
                         .WithMany("Mascotas")
-                        .HasForeignKey("IdEpecieFk")
+                        .HasForeignKey("IdEspecieFk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -592,10 +587,6 @@ namespace Persistence.Data.Migrations
                         .HasForeignKey("IdUserFk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.Medicamento", null)
-                        .WithMany("MovimientoMedicamentos")
-                        .HasForeignKey("MedicamentoId");
 
                     b.Navigation("Propietario");
 
@@ -691,8 +682,6 @@ namespace Persistence.Data.Migrations
                     b.Navigation("DetallesMovimientos");
 
                     b.Navigation("MedicamentosProveedores");
-
-                    b.Navigation("MovimientoMedicamentos");
 
                     b.Navigation("TratamientosMedicos");
                 });

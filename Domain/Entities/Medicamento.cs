@@ -9,6 +9,5 @@ public class Medicamento : BaseEntity
     public ICollection<MedicamentoProveedor> MedicamentosProveedores { get; set; }
     public ICollection<Proveedor> Proveedores { get; set; }
     public ICollection<DetalleMovimiento> DetallesMovimientos { get; set; }
-    public ICollection<MovimientoMedicamento> MovimientoMedicamentos {get; set;}
     public ICollection<TratamientoMedico> TratamientosMedicos {get; set;}
 }

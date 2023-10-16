@@ -1,4 +1,4 @@
-Id,IdPropietarioFk,IdEpecieFk,IdRazaFk,Nombre,FechaNacimiento
+Id,IdPropietarioFk,IdEspecieFk,IdRazaFk,Nombre,FechaNacimiento
 1,1,1,1,Mascota 1,2020-01-01
 2,2,1,2,Mascota 2,2020-02-02
 3,3,2,3,Mascota 3,2020-03-03
