@@ -14,6 +14,7 @@ public interface IUnitOfWork
     IPropietarioRepository Propietarios { get; }
     IProveedorRepository Proveedores { get; }
     IRazaRepository Razas { get; }
+    IRoleRepository Roles { get; }
     ITipoMovimientoRepository TiposMovimientos { get; }
     ITratamientoMedicoRepository TratamientosMedicos { get; }
     IVeterinarioRepository Veterinarios { get; }

@@ -9,12 +9,12 @@ using API.Helpers;
 namespace API.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-public class CitaController : BaseApiController
+public class EspecieController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;
     private readonly IMapper mapper;
 
-    public CitaController(IUnitOfWork unitofwork, IMapper mapper)
+    public EspecieController(IUnitOfWork unitofwork, IMapper mapper)
     {
         this.unitofwork = unitofwork;
         this.mapper = mapper;
@@ -25,10 +25,10 @@ public class CitaController : BaseApiController
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<CitaDto>>> Get()
+    public async Task<ActionResult<IEnumerable<EspecieDto>>> Get()
     {
-        var entidad = await unitofwork.Citas.GetAllAsync();
-        return mapper.Map<List<CitaDto>>(entidad);
+        var entidad = await unitofwork.Especies.GetAllAsync();
+        return mapper.Map<List<EspecieDto>>(entidad);
     }
 
     [HttpGet("{id}")]
@@ -36,23 +36,23 @@ public class CitaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CitaDto>> Get(int id)
+    public async Task<ActionResult<EspecieDto>> Get(int id)
     {
-        var entidad = await unitofwork.Citas.GetByIdAsync(id);
+        var entidad = await unitofwork.Especies.GetByIdAsync(id);
         if (entidad == null)
         {
             return NotFound();
         }
-        return this.mapper.Map<CitaDto>(entidad);
+        return this.mapper.Map<EspecieDto>(entidad);
     }
-    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Cita>> Post(CitaDto entidadDto)
+    public async Task<ActionResult<Especie>> Post(EspecieDto entidadDto)
     {
-        var entidad = this.mapper.Map<Cita>(entidadDto);
-        this.unitofwork.Citas.Add(entidad);
+        var entidad = this.mapper.Map<Especie>(entidadDto);
+        this.unitofwork.Especies.Add(entidad);
         await unitofwork.SaveAsync();
         if (entidad == null)
         {
@@ -67,14 +67,14 @@ public class CitaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-    public async Task<ActionResult<CitaDto>> Put(int id, [FromBody] CitaDto entidadDto)
+    public async Task<ActionResult<EspecieDto>> Put(int id, [FromBody] EspecieDto entidadDto)
     {
         if (entidadDto == null)
         {
             return NotFound();
         }
-        var entidad = this.mapper.Map<Cita>(entidadDto);
-        unitofwork.Citas.Update(entidad);
+        var entidad = this.mapper.Map<Especie>(entidadDto);
+        unitofwork.Especies.Update(entidad);
         await unitofwork.SaveAsync();
         return entidadDto;
     }
@@ -83,12 +83,12 @@ public class CitaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
-        var entidad = await unitofwork.Citas.GetByIdAsync(id);
+        var entidad = await unitofwork.Especies.GetByIdAsync(id);
         if (entidad == null)
         {
             return NotFound();
         }
-        unitofwork.Citas.Remove(entidad);
+        unitofwork.Especies.Remove(entidad);
         await unitofwork.SaveAsync();
         return NoContent();
     }
@@ -99,10 +99,10 @@ public class CitaController : BaseApiController
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<CitaDto>>> GetPagination([FromQuery] Params pagparams)
+    public async Task<ActionResult<Pager<EspecieDto>>> GetPagination([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Citas.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
-        var listEntidad = mapper.Map<List<CitaDto>>(entidad.registros);
-        return new Pager<CitaDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var entidad = await unitofwork.Especies.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<EspecieDto>>(entidad.registros);
+        return new Pager<EspecieDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }

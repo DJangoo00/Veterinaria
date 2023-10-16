@@ -16,6 +16,7 @@ builder.Services.ConfigureRatelimiting();
 builder.Services.ConfigureApiVersioning();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.ConfigureCors();
+builder.Services.AddAplicacionServices();
 builder.Services.AddDbContext<ApiContext>(options =>
     {
         string connectionString = builder.Configuration.GetConnectionString("ConexMySql");

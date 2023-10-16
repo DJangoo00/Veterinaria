@@ -116,18 +116,7 @@ public class ApiContextSeed
                     }
                 }
             }
-            if (!context.TiposMovimientos.Any())
-            {
-                using (var reader = new StreamReader(ruta + @"/Data/Csv/TipoMovimiento.csv"))
-                {
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        var list = csv.GetRecords<TipoMovimiento>();
-                        context.TiposMovimientos.AddRange(list);
-                        await context.SaveChangesAsync();
-                    }
-                }
-            }
+            
             if (!context.TiposMovimientos.Any())
             {
                 using (var reader = new StreamReader(ruta + @"/Data/Csv/TipoMovimiento.csv"))
