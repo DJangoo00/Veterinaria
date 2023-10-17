@@ -8,6 +8,6 @@ public class MovimientoMedicamentoDto : BaseEntity
     public int IdPropietarioFk {get; set;}
     public PropietarioDto Propietario { get; set; }
     public int IdTipMovFk { get; set; }
-    public TipoMovimiento TipoMovimiento     { get; set; }
+    public TipoMovimientoDto TipoMovimiento { get; set; }
     public int Total { get; set; }
 }

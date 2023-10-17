@@ -115,4 +115,19 @@ public class ProveedorController : BaseApiController
         var listEntidad = mapper.Map<List<ProveedorDto>>(entidad.registros);
         return new Pager<ProveedorDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
+
+    //Listar los proveedores que me venden un determinado medicamento.
+    [HttpGet("c10/{name}")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetbyMedName(string medicamento)
+    {
+        var entidad = await unitofwork.Proveedores.GetbyMedName(medicamento);
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
+    }
 }

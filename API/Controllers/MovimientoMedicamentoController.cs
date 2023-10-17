@@ -45,16 +45,6 @@ public class MovimientoMedicamentoController : BaseApiController
         }
         return this.mapper.Map<MovimientoMedicamentoDto>(entidad);
     }
-    /*[HttpGet]
-    [MapToApiVersion("1.1")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<MovimientoMedicamentoDto>>> GetPagination([FromQuery] Params paisParams)
-    {
-        var entidad = await unitofwork.MovimientosMedicamentos.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-        var listEntidad = mapper.Map<List<MovimientoMedicamentoDto>>(entidad.registros);
-        return new Pager<MovimientoMedicamentoDto>(listEntidad, entidad.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-    }*/
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -114,5 +104,20 @@ public class MovimientoMedicamentoController : BaseApiController
         var entidad = await unitofwork.MovimientosMedicamentos.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
         var listEntidad = mapper.Map<List<MovimientoMedicamentoDto>>(entidad.registros);
         return new Pager<MovimientoMedicamentoDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+    }
+
+    //consultas avanzadas
+    [HttpGet("c8")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetWT()
+    {
+        var entidad = await unitofwork.MovimientosMedicamentos.GetWT();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
     }
 }

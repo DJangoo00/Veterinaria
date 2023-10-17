@@ -45,16 +45,6 @@ public class TratamientoMedicoController : BaseApiController
         }
         return this.mapper.Map<TratamientoMedicoDto>(entidad);
     }
-    /*[HttpGet]
-    [MapToApiVersion("1.1")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<TratamientoMedicoDto>>> GetPagination([FromQuery] Params paisParams)
-    {
-        var entidad = await unitofwork.TratamientosMedicos.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-        var listEntidad = mapper.Map<List<TratamientoMedicoDto>>(entidad.registros);
-        return new Pager<TratamientoMedicoDto>(listEntidad, entidad.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-    }*/
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -115,4 +105,5 @@ public class TratamientoMedicoController : BaseApiController
         var listEntidad = mapper.Map<List<TratamientoMedicoDto>>(entidad.registros);
         return new Pager<TratamientoMedicoDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
+
 }

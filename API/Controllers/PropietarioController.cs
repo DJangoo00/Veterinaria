@@ -115,4 +115,21 @@ public class PropietarioController : BaseApiController
         var listEntidad = mapper.Map<List<PropietarioDto>>(entidad.registros);
         return new Pager<PropietarioDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
+
+    //consultas avanzadas
+
+    //Listar los propietarios y sus mascotas.
+    [HttpGet("c4")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetWM()
+    {
+        var entidad = await unitofwork.Propietarios.GetWM();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
+    }
 }
