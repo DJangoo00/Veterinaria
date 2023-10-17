@@ -5,6 +5,7 @@ using API.Dtos;
 using Domain.Interfaces;
 using Domain.Entities;
 using API.Helpers;
+using API.Services;
 
 namespace API.Controllers;
 [ApiVersion("1.0")]
@@ -13,11 +14,13 @@ public class UserController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;
     private readonly IMapper mapper;
+    private readonly IUserService _Userservice;
 
-    public UserController(IUnitOfWork unitofwork, IMapper mapper)
+    public UserController(IUnitOfWork unitofwork, IMapper mapper, IUserService Userservice)
     {
         this.unitofwork = unitofwork;
         this.mapper = mapper;
+        this._Userservice = Userservice;
     }
 
     //Inicio de los controladores v1.0
@@ -45,18 +48,8 @@ public class UserController : BaseApiController
         }
         return this.mapper.Map<UserDto>(entidad);
     }
-    /*[HttpGet]
-    [MapToApiVersion("1.1")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<UserDto>>> GetPagination([FromQuery] Params paisParams)
-    {
-        var entidad = await unitofwork.Users.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-        var listEntidad = mapper.Map<List<UserDto>>(entidad.registros);
-        return new Pager<UserDto>(listEntidad, entidad.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-    }*/
 
-    [HttpPost]
+    /* [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<User>> Post(UserDto entidadDto)
@@ -101,7 +94,64 @@ public class UserController : BaseApiController
         unitofwork.Users.Remove(entidad);
         await unitofwork.SaveAsync();
         return NoContent();
+    } */
+
+    //jwt
+    [HttpPost("register")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> RegisterAsync(RegisterDto model)
+    {
+        var result = await _Userservice.RegisterAsync(model);
+        return Ok(result);
     }
+
+    [HttpPost("token")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetTokenAsync(LoginDto model)
+    {
+        var result = await _Userservice.GetTokenAsync(model);
+        SetRefreshTokenInCookie(result.RefreshToken);
+        return Ok(result);
+    }
+    
+    [HttpPost("addrole")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddRoleAsync(AddRoleDto model)
+    {
+        var result = await _Userservice.AddRoleAsync(model);
+        return Ok(result);
+    }
+
+    [HttpPost("refresh-token")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RefreshToken()
+    {
+        var refreshToken = Request.Cookies["refreshToken"];
+        var response = await _Userservice.RefreshTokenAsync(refreshToken);
+        if (!string.IsNullOrEmpty(response.RefreshToken))
+            SetRefreshTokenInCookie(response.RefreshToken);
+        return Ok(response);
+    }
+
+
+    private void SetRefreshTokenInCookie(string refreshToken)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(10),
+        };
+        Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+    }
+    
 
     //metodos version 1.1
     

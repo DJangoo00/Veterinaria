@@ -1,12 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Persistence;
-using API.Extensions;
 using AspNetCoreRateLimit;
+using API.Extensions;
+using API.Helpers;
+using Persistence;
+using Serilog;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+var logger = new LoggerConfiguration()
+					.ReadFrom.Configuration(builder.Configuration)
+					.Enrich.FromLogContext()
+					.CreateLogger();
 
 // Add services to the container.
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,6 +26,8 @@ builder.Services.ConfigureApiVersioning();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.ConfigureCors();
 builder.Services.AddAplicacionServices();
+builder.Services.AddJwt(builder.Configuration);
+
 builder.Services.AddDbContext<ApiContext>(options =>
     {
         string connectionString = builder.Configuration.GetConnectionString("ConexMySql");
