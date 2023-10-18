@@ -32,7 +32,7 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascotaRepository
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    //consultas especificas v1.1
+    //consultas especificas v1.0
 
     public async Task<IEnumerable<Mascota>> GetByEspecie(string _especie)
     {
@@ -183,5 +183,212 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascotaRepository
         )
         .ToListAsync();
         return mas;
+    }
+
+    //consultas especificas v1.1
+
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetByEspeciePg(int pageIndex, int pageSize, string Search)
+    {
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            select new
+            {
+                NombreMascota = m.Nombre,
+                IdMascota = m.Id,
+                IdEspecie = m.IdEspecieFk,
+                Especie = e.Nombre,
+                IdRaza = m.IdRazaFk,
+                NombreRaza = r.Nombre,
+                IdPropietario = m.IdPropietarioFk,
+                NombrePropietario = p.Nombre,
+                TelefonoPropietario = p.Telefono,
+            }
+        )/* .Distinct() */;
+        if (!String.IsNullOrEmpty(Search))
+        {
+            query = query.Where(m => m.Especie.ToLower().Contains(Search));
+        }
+        query = query.OrderBy(m => m.IdMascota);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
+
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetBy3MandMotivoPg(int trimestre, int year, int pageIndex, int pageSize, string Search)
+    {
+        var minMonth = 1;
+        var maxMonth = 12;
+        switch (trimestre)
+        {
+            case 1:
+                minMonth = 1;
+                maxMonth = 3;
+                break;
+            case 2:
+                minMonth = 4;
+                maxMonth = 6;
+                break;
+            case 3:
+                minMonth = 7;
+                maxMonth = 9;
+                break;
+            case 4:
+                minMonth = 10;
+                maxMonth = 12;
+                break;
+            default:
+                break;
+        }
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            join c in _context.Citas on m.Id equals c.IdMascotaFk
+            where c.Fecha.Year == year
+            where minMonth <= c.Fecha.Month && c.Fecha.Month <= maxMonth
+            select new
+            {
+                NombreMascota = m.Nombre,
+                IdMascota = m.Id,
+                IdEspecie = m.IdEspecieFk,
+                Especie = e.Nombre,
+                IdRaza = m.IdRazaFk,
+                NombreRaza = r.Nombre,
+                IdPropietario = m.IdPropietarioFk,
+                NombrePropietario = p.Nombre,
+                TelefonoPropietario = p.Telefono,
+                MotivoCita = c.Motivo
+            }
+        )/* .Distinct() */;
+        if (!String.IsNullOrEmpty(Search))
+        {
+            query = query.Where(m => m.MotivoCita.ToLower().Contains(Search));
+        }
+        query = query.OrderBy(m => m.IdMascota);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
+
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetGroupByEspeciePg(int pageIndex, int pageSize, string search)
+    {
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            group new {m,e,r,p} by e.Nombre into g
+            select new
+            {
+                Especie = g.Key,
+                Mascotas = g.Select( x => new
+                {
+                    NombreMascota = x.m.Nombre,
+                    IdMascota = x.m.Id,
+                    IdRaza = x.m.IdRazaFk,
+                    NombreRaza = x.r.Nombre,
+                    IdPropietario = x.m.IdPropietarioFk,
+                    NombrePropietario = x.p.Nombre,
+                    TelefonoPropietario = x.p.Telefono
+                }
+                )/* .OrderBy(x => x.IdMascota) */
+            }
+        )/* .Distinct() */;
+        query = query.OrderBy(m => m.Especie);
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(m => m.Especie.ToLower().Contains(search));
+        }
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
+
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetByRazaPg(int pageIndex, int pageSize, string Search)
+    {
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            select new
+            {
+                NombreMascota = m.Nombre,
+                IdMascota = m.Id,
+                IdEspecie = m.IdEspecieFk,
+                Especie = e.Nombre,
+                IdRaza = m.IdRazaFk,
+                NombreRaza = r.Nombre,
+                IdPropietario = m.IdPropietarioFk,
+                NombrePropietario = p.Nombre,
+                TelefonoPropietario = p.Telefono,
+            }
+        )/* .Distinct() */;
+        if (!String.IsNullOrEmpty(Search))
+        {
+            query = query.Where(m => m.NombreRaza.ToLower().Contains(Search));
+        }
+        query = query.OrderBy(m => m.IdMascota);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
+
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetGroupbyRazaPg(int pageIndex, int pageSize, string search)
+    {
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            group new {m,e,r,p} by e.Nombre into g
+            select new
+            {
+                Especie = g.Key,
+                Mascotas = g.Select( x => new
+                {
+                    NombreMascota = x.m.Nombre,
+                    IdMascota = x.m.Id,
+                    IdRaza = x.m.IdRazaFk,
+                    NombreRaza = x.r.Nombre,
+                    IdPropietario = x.m.IdPropietarioFk,
+                    NombrePropietario = x.p.Nombre,
+                    TelefonoPropietario = x.p.Telefono
+                }
+                )/* .OrderBy(x => x.IdMascota) */
+            }
+        )/* .Distinct() */;
+        query = query.OrderBy(m => m.Especie);
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(m => m.Especie.ToLower().Contains(search));
+        }
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
     }
 }

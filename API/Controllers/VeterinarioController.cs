@@ -162,7 +162,7 @@ public class VeterinarioController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Pager<object>>> GetPetByVet([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Veterinarios.GetPetByVet(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var entidad = await unitofwork.Veterinarios.GetPetByVet (pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
         var listEntidad = mapper.Map<List<object>>(entidad.registros);
         return new Pager<object>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
