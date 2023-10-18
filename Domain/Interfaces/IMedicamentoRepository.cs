@@ -6,4 +6,5 @@ public interface IMedicamentoRepository : IGenericRepository<Medicamento>
     //consultas avanzadas
     Task<IEnumerable<Medicamento>> GetbyLabName(string _labName);
     Task<IEnumerable<Medicamento>> GetUpperPrice(int price);
+    Task<(int totalRegistros, IEnumerable<Medicamento> registros)> GetbyLabNamePg(int pageIndex, int pageSize, string _search);
 }

@@ -6,6 +6,7 @@ using Domain.Interfaces;
 using Domain.Entities;
 using API.Helpers;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 [ApiVersion("1.0")]
@@ -25,6 +26,7 @@ public class UserController : BaseApiController
 
     //Inicio de los controladores v1.0
     [HttpGet]
+    [Authorize]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -35,6 +37,7 @@ public class UserController : BaseApiController
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -140,6 +143,7 @@ public class UserController : BaseApiController
     //metodos version 1.1
     
     [HttpGet("pagination")]
+    [Authorize]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

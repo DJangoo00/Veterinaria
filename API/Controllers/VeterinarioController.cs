@@ -5,10 +5,12 @@ using API.Dtos;
 using Domain.Interfaces;
 using Domain.Entities;
 using API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
+[Authorize]
 public class VeterinarioController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;
@@ -21,6 +23,7 @@ public class VeterinarioController : BaseApiController
     }
 
     //Inicio de los controladores v1.0
+    //Controladores genericos
     [HttpGet]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -95,23 +98,10 @@ public class VeterinarioController : BaseApiController
         await unitofwork.SaveAsync();
         return NoContent();
     }
-
-    //metodos version 1.1
-    
-    [HttpGet("pagination")]
-    [MapToApiVersion("1.1")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<VeterinarioDto>>> GetPagination([FromQuery] Params pagparams)
-    {
-        var entidad = await unitofwork.Veterinarios.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
-        var listEntidad = mapper.Map<List<VeterinarioDto>>(entidad.registros);
-        return new Pager<VeterinarioDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
-    }
     //consultas avanzadas
     //Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
     [HttpGet("c1/{especialidad}")]
-    [MapToApiVersion("1.1")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<VeterinarioDto>>> GetByEspecialidad(string especialidad)
@@ -126,7 +116,7 @@ public class VeterinarioController : BaseApiController
 
     //Listar las mascotas que fueron atendidas por un determinado veterinario.
     [HttpGet("c9/{veterinario}")]
-    [MapToApiVersion("1.1")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<object>>> GetByVeterinario(string veterinario)
@@ -138,4 +128,43 @@ public class VeterinarioController : BaseApiController
         }
         return mapper.Map<List<object>>(entidad);
     }
+
+    //metodos version 1.1 incluyen paginado
+    
+    [HttpGet("pagination")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<VeterinarioDto>>> GetPagination([FromQuery] Params pagparams)
+    {
+        var entidad = await unitofwork.Veterinarios.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<VeterinarioDto>>(entidad.registros);
+        return new Pager<VeterinarioDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+    }
+
+    //consultas avanzadas
+    //Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular. Pg!
+    [HttpGet("c1Pg")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<VeterinarioDto>>> GetByEspecialidadPg([FromQuery] Params pagparams)
+    {
+        var entidad = await unitofwork.Veterinarios.GetByEspecialidadPg(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<VeterinarioDto>>(entidad.registros);
+        return new Pager<VeterinarioDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+    }
+
+    //Listar las mascotas que fueron atendidas por un determinado veterinario.
+    [HttpGet("c9Pg")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<object>>> GetPetByVet([FromQuery] Params pagparams)
+    {
+        var entidad = await unitofwork.Veterinarios.GetPetByVet(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<object>>(entidad.registros);
+        return new Pager<object>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+    }
+
 }

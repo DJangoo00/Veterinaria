@@ -28,7 +28,8 @@ public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicament
             .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 
-    //consultas especificas v1.1
+    //consultas especificas v1.0
+    //consulta 2
     public async Task<IEnumerable<Medicamento>> GetbyLabName(string _labName)
     {
         var meds = await 
@@ -40,7 +41,7 @@ public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicament
         ).ToListAsync();
         return meds;
     }
-
+    //consulta 5
     public async Task<IEnumerable<Medicamento>> GetUpperPrice(int price)
     {
         var meds = await 
@@ -53,4 +54,30 @@ public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicament
         .ToListAsync();
         return meds;
     }
+
+    //consultas especificas v1.1
+    //consulta 2pg
+
+    public async Task<(int totalRegistros, IEnumerable<Medicamento> registros)> GetbyLabNamePg(int pageIndex, int pageSize, string search)
+    {
+        var query = (
+            from m in _context.Medicamentos
+            join l in _context.Laboratorios on m.IdLaboratorioFk equals l.Id
+            where l.Nombre.ToLower().Contains(search)
+            select m 
+        );
+        /* if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(l => l.Nombre.ToLower().Contains(search));
+        } */
+        query = query.OrderBy(p => p.Id);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
+
+    
 }
