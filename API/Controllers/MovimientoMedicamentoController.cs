@@ -5,10 +5,12 @@ using API.Dtos;
 using Domain.Interfaces;
 using Domain.Entities;
 using API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
+[Authorize]
 public class MovimientoMedicamentoController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;
