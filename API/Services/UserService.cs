@@ -61,6 +61,8 @@ public class UserService : IUserService
             return $"User {registerDto.Nombre} already registered.";
         }
     }
+
+
     public async Task<DataUserDto> GetTokenAsync(LoginDto model)
     {
         DataUserDto dataUserDto = new DataUserDto();
@@ -73,13 +75,19 @@ public class UserService : IUserService
             dataUserDto.Message = $"User does not exist with username {model.Nombre}.";
             return dataUserDto;
         }
-
+        Console.WriteLine("1");
         var result = _passwordHasher.VerifyHashedPassword(user, user.Password, model.Password);
 
         if (result == PasswordVerificationResult.Success)
         {
+            Console.WriteLine("2");
+
             dataUserDto.IsAuthenticated = true;
+            Console.WriteLine("3");
+
             JwtSecurityToken jwtSecurityToken = CreateJwtToken(user);
+            Console.WriteLine("4");
+
             dataUserDto.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             dataUserDto.Nombre = user.Nombre;
             dataUserDto.Roles = user.Roles
@@ -101,13 +109,16 @@ public class UserService : IUserService
                 _unitOfWork.Users.Update(user);
                 await _unitOfWork.SaveAsync();
             }
-
             return dataUserDto;
         }
         dataUserDto.IsAuthenticated = false;
         dataUserDto.Message = $"Credenciales incorrectas para el usuario {user.Nombre}.";
+        Console.WriteLine("5");
+
         return dataUserDto;
     }
+
+
     public async Task<string> AddRoleAsync(AddRoleDto model)
     {
 
@@ -144,6 +155,8 @@ public class UserService : IUserService
         }
         return $"Invalid Credentials";
     }
+
+
     public async Task<DataUserDto> RefreshTokenAsync(string refreshToken)
     {
         var dataUserDto = new DataUserDto();
@@ -188,6 +201,8 @@ public class UserService : IUserService
         dataUserDto.RefreshTokenExpiration = newRefreshToken.Expires;
         return dataUserDto;
     }
+
+
     private RefreshToken CreateRefreshToken()
     {
         var randomNumber = new byte[32];
@@ -202,6 +217,8 @@ public class UserService : IUserService
             };
         }
     }
+
+
     private JwtSecurityToken CreateJwtToken(User user)
     {
         var roles = user.Roles;
@@ -228,5 +245,5 @@ public class UserService : IUserService
             signingCredentials: signingCredentials);
         return jwtSecurityToken;
     }
-    
+
 }

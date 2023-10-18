@@ -48,23 +48,7 @@ public class UserController : BaseApiController
         }
         return this.mapper.Map<UserDto>(entidad);
     }
-
-    /* [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<User>> Post(UserDto entidadDto)
-    {
-        var entidad = this.mapper.Map<User>(entidadDto);
-        this.unitofwork.Users.Add(entidad);
-        await unitofwork.SaveAsync();
-        if (entidad == null)
-        {
-            return BadRequest();
-        }
-        entidadDto.Id = entidad.Id;
-        return CreatedAtAction(nameof(Post), new { id = entidadDto.Id }, entidadDto);
-    }
-
+    /*
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -108,7 +92,7 @@ public class UserController : BaseApiController
     }
 
     [HttpPost("token")]
-    [MapToApiVersion("1.1")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetTokenAsync(LoginDto model)
@@ -119,7 +103,7 @@ public class UserController : BaseApiController
     }
     
     [HttpPost("addrole")]
-    [MapToApiVersion("1.1")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddRoleAsync(AddRoleDto model)
@@ -129,7 +113,7 @@ public class UserController : BaseApiController
     }
 
     [HttpPost("refresh-token")]
-    [MapToApiVersion("1.1")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RefreshToken()

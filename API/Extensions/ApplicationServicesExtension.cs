@@ -1,9 +1,12 @@
 using System.Text;
 using API.Helpers;
+using API.Services;
 using App.UnitOfWork;
 using AspNetCoreRateLimit;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
@@ -22,12 +25,13 @@ public static class ApplicationServiceExtension
         );
     });
 
-    
-    //Adicion de la unit Of Work
+
+    //Adicion de la unit Of Work, autenticacion y codificado de password
     public static void AddAplicacionServices(this IServiceCollection services)
     {
-        //Services.AddScoped<IpaisInterface,PaisRepository>();
-        //Services.AddScoped<ITipoPersona,TipoPeronsaRepository>();
+
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
@@ -66,7 +70,7 @@ public static class ApplicationServiceExtension
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.ApiVersionReader = ApiVersionReader.Combine(
                 new QueryStringApiVersionReader("ver"),
-                new HeaderApiVersionReader ("X-Version")
+                new HeaderApiVersionReader("X-Version")
             );
         });
     }
