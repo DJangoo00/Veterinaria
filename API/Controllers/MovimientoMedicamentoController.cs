@@ -95,6 +95,23 @@ public class MovimientoMedicamentoController : BaseApiController
         return NoContent();
     }
 
+    //consultas avanzadas
+
+    //Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
+    [HttpGet("c8")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetWT()
+    {
+        var entidad = await unitofwork.MovimientosMedicamentos.GetWT();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
+    }
+
     //metodos version 1.1
     
     [HttpGet("pagination")]
@@ -109,17 +126,16 @@ public class MovimientoMedicamentoController : BaseApiController
     }
 
     //consultas avanzadas
-    [HttpGet("c8")]
+
+    //Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
+    [HttpGet("c8Pg")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<object>>> GetWT()
+    public async Task<ActionResult<Pager<object>>> GetWTPg([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.MovimientosMedicamentos.GetWT();
-        if (entidad == null)
-        {
-            return NotFound();
-        }
-        return mapper.Map<List<object>>(entidad);
+        var entidad = await unitofwork.MovimientosMedicamentos.GetWTPg (pagparams.PageIndex, pagparams.PageSize, "");
+        var listEntidad = mapper.Map<List<object>>(entidad.registros);
+        return new Pager<object>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }

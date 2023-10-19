@@ -51,23 +51,6 @@ public class UserController : BaseApiController
         }
         return this.mapper.Map<UserDto>(entidad);
     }
-    /*
-    [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-    public async Task<ActionResult<UserDto>> Put(int id, [FromBody] UserDto entidadDto)
-    {
-        if (entidadDto == null)
-        {
-            return NotFound();
-        }
-        var entidad = this.mapper.Map<User>(entidadDto);
-        unitofwork.Users.Update(entidad);
-        await unitofwork.SaveAsync();
-        return entidadDto;
-    }
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,7 +64,7 @@ public class UserController : BaseApiController
         unitofwork.Users.Remove(entidad);
         await unitofwork.SaveAsync();
         return NoContent();
-    } */
+    }
 
     //jwt
     [HttpPost("register")]
@@ -127,8 +110,6 @@ public class UserController : BaseApiController
             SetRefreshTokenInCookie(response.RefreshToken);
         return Ok(response);
     }
-
-
     private void SetRefreshTokenInCookie(string refreshToken)
     {
         var cookieOptions = new CookieOptions

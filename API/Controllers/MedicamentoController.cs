@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 public class MedicamentoController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;

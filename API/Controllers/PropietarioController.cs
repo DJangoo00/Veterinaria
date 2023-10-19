@@ -105,6 +105,23 @@ public class PropietarioController : BaseApiController
         return NoContent();
     }
 
+    //consultas avanzadas
+
+    //Listar los propietarios y sus mascotas.
+    [HttpGet("c4")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetWM()
+    {
+        var entidad = await unitofwork.Propietarios.GetWM();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
+    }
+
     //metodos version 1.1
     
     [HttpGet("pagination")]
@@ -121,17 +138,14 @@ public class PropietarioController : BaseApiController
     //consultas avanzadas
 
     //Listar los propietarios y sus mascotas.
-    [HttpGet("c4")]
+    [HttpGet("c4Pg")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<object>>> GetWM()
+    public async Task<ActionResult<Pager<object>>> GetWMPg([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Propietarios.GetWM();
-        if (entidad == null)
-        {
-            return NotFound();
-        }
-        return mapper.Map<List<object>>(entidad);
+        var entidad = await unitofwork.Propietarios.GetWMPg (pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<object>>(entidad.registros);
+        return new Pager<object>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }

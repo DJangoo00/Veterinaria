@@ -47,16 +47,6 @@ public class ProveedorController : BaseApiController
         }
         return this.mapper.Map<ProveedorDto>(entidad);
     }
-    /*[HttpGet]
-    [MapToApiVersion("1.1")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<ProveedorDto>>> GetPagination([FromQuery] Params paisParams)
-    {
-        var entidad = await unitofwork.Proveedores.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-        var listEntidad = mapper.Map<List<ProveedorDto>>(entidad.registros);
-        return new Pager<ProveedorDto>(listEntidad, entidad.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
-    }*/
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -105,6 +95,22 @@ public class ProveedorController : BaseApiController
         return NoContent();
     }
 
+    //consultas avanzadas
+    //Listar los proveedores que me venden un determinado medicamento.
+    [HttpGet("c10/{name}")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> GetbyMedName(string medicamento)
+    {
+        var entidad = await unitofwork.Proveedores.GetbyMedName(medicamento);
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<List<object>>(entidad);
+    }
+
     //metodos version 1.1
     
     [HttpGet("pagination")]
@@ -119,17 +125,14 @@ public class ProveedorController : BaseApiController
     }
 
     //Listar los proveedores que me venden un determinado medicamento.
-    [HttpGet("c10/{name}")]
+    [HttpGet("c10Pg")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<object>>> GetbyMedName(string medicamento)
+    public async Task<ActionResult<Pager<object>>> GetbyMedNamePg([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Proveedores.GetbyMedName(medicamento);
-        if (entidad == null)
-        {
-            return NotFound();
-        }
-        return mapper.Map<List<object>>(entidad);
+        var entidad = await unitofwork.Proveedores.GetbyMedNamePg (pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<object>>(entidad.registros);
+        return new Pager<object>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }

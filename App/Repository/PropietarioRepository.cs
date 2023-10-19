@@ -23,21 +23,21 @@ public class PropietarioRepository : GenericRepository<Propietario>, IPropietari
     public override async Task<Propietario> GetByIdAsync(int id)
     {
         return await _context.Propietarios
-            .FirstOrDefaultAsync(p =>  p.Id == id);
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
-    
 
-    //consultas especificas v1.1
+
+    //consultas especificas v1.0
     public async Task<IEnumerable<object>> GetWM()
     {
-        var prop = await 
+        var prop = await
         (
             from m in _context.Mascotas
             join e in _context.Especies on m.IdEspecieFk equals e.Id
             join r in _context.Razas on m.IdRazaFk equals r.Id
             join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
-            group new {m, e, r, p} by p into especgroup
-            select new 
+            group new { m, e, r, p } by p into especgroup
+            select new
             {
                 IdPropietario = especgroup.Key.Id,
                 NombrePropietario = especgroup.Key.Nombre,
@@ -54,5 +54,43 @@ public class PropietarioRepository : GenericRepository<Propietario>, IPropietari
         )
         .ToListAsync();
         return prop;
+    }
+
+    //consultas especificas v1.1
+    public async Task<(int totalRegistros, IEnumerable<object> registros)> GetWMPg(int pageIndex, int pageSize, string Search)
+    {
+        var query =
+        (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.IdEspecieFk equals e.Id
+            join r in _context.Razas on m.IdRazaFk equals r.Id
+            join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
+            group new { m, e, r, p } by p into especgroup
+            select new
+            {
+                IdPropietario = especgroup.Key.Id,
+                NombrePropietario = especgroup.Key.Nombre,
+                Mascotas = especgroup.Select(x => new
+                {
+                    NombreMascota = x.m.Nombre,
+                    IdMascota = x.m.Id,
+                    IdEspecie = x.m.IdEspecieFk,
+                    NombreEspecie = x.e.Nombre,
+                    IdRaza = x.m.IdRazaFk,
+                    NombreRaza = x.r.Nombre,
+                })
+            }
+        )/* .Distinct() */;
+        if (!String.IsNullOrEmpty(Search))
+        {
+            query = query.Where(p => p.NombrePropietario.ToLower().Contains(Search));
+        }
+        query = query.OrderBy(p => p.IdPropietario);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
     }
 }
