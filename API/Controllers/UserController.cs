@@ -124,7 +124,7 @@ public class UserController : BaseApiController
     //metodos version 1.1
     
     [HttpGet("pagination")]
-    [Authorize]
+    //[Authorize]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

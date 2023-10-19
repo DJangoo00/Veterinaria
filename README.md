@@ -50,24 +50,32 @@ El proyecto de administración de veterinaria tiene como objetivo mejorar la efi
         Nota: Se debe mostrar una lista de las razas y la cantidad de mascotas que pertenecen a la raza.
 
 ## Versiones Disponibles 📈
-
+Se implementa la seleccion de version a usar desde Query y Header
 1. V1.0
-    Incluyen los endpoints genericos y consultas especificas sin paginado
+    Incluyen los endpoints genericos y consultas especificas sin paginado.
 
 2. V1.1
-    Incluyen los endpoints de consultas genericas con paginacion y especificos con paginacion
+    Incluyen los endpoints de consultas genericas con paginacion y especificos con paginacion.
 
 
 ## Uso 🕹
 
 Con la API en ejecucion se pueden encontrar 3 grupos principales de endpoints. Relacionados a USUARIOS, genericos y especificos.
+**Versionado**
+Para la implementacion de las versiones se puede realizar desde Header como en la imagen o desde Query con la key ver=1.0
+![](./Readme_Img/V1.1.png.png)
+
+
+**Paginado**
+Para realizar la paginación se va al apartado de "Query" y se ingresa lo siguiente:
+![](./Readme_Img/paginado.png.png)
 
 ### Endpoints de Usuario
 
 #### 1. Registro de Usuario
 Este endpoint permite a los usuarios registrarse en el sistema.
 **Endpoint**: `http://localhost:5051/api/User/register`
-**X-Version**: `1.0`
+**Version**: `1.0`
 ```JSON
 {
     "nombre": "<nombre_de_usuario>",
@@ -80,7 +88,7 @@ Este endpoint permite a los usuarios registrarse en el sistema.
 #### 2. Generacion de Tokken
 Una vez registrado el usuario tendrá que ingresar para recibir un token, este será ingresado al siguiente Endpoint que es el de Refresh Token.
 **Endpoint**: `http://localhost:5051/api/User/token`
-**X-Version**: `1.0`
+**Version**: `1.0`
 ```JSON
 {
     "nombre": "<nombre_de_usuario>",
@@ -93,12 +101,12 @@ Este endpoint permite actualizar el token el cual expira cada minuto.
 
 Se dejan los mismos datos en el Body y luego se ingresa al "Auth", "Bearer", allí se ingresa el token obtenido en el anterior Endpoint.
 **Endpoint**: `http://localhost:5051/api/User/refresh-token`
-**X-Version**: `1.0`
+**Version**: `1.0`
 
 #### 4. Asignacion de Rol
-Permite asignarle un rol diferente al usuario del predeterminado el cual es "empleado"
+Permite asignarle un rol diferente al usuario del predeterminado el cual es "empleado".
 **Endpoint**: `http://localhost:5051/api/User/addrole`
-**X-Version**: `1.0`
+**Version**: `1.0`
 ```JSON
 {
     "nombre": "<nombre_de_usuario>",
@@ -107,32 +115,71 @@ Permite asignarle un rol diferente al usuario del predeterminado el cual es "emp
 }
 ```
 
+**Otros Endpoints**
+
+- Obtener Todos los Usuarios: GET.
+**Endpoint**: `http://localhost:5165/api//User`
+
+- Obtener Usuario por ID: GET.
+**Endpoint**: `http://localhost:5165/api/User/{id}`
+
+- Actualizar Usuario: PUT.
+**Endpoint**: `http://localhost:5165/api/User/{id}`
+
+- Eliminar Usuario: DELETE.
+**Endpoint**: `http://localhost:5165/api/User/{id}`
+
 
 ### Endpoints Especificos ✅
+Para el desarrollo de las consultas se analizaron las variables de estas para dar flexibilidad al desarrollo de estas.
 
 #### 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 3. Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 4. Listar los propietarios y sus mascotas.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 5. Listar los medicamentos que tenga un precio de venta mayor a 50000
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 6. Listar las mascotas que fueron atendidas por motivo de vacunacion en el primer trimestre del 2023
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 7. Listar todas las mascotas agrupadas por especie.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 8. Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 10. Listar los proveedores que me venden un determinado medicamento.
+**Version**: `1.0`
+**Version**: `1.1`
 
-#### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver
+#### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver.
+**Version**: `1.0`
+**Version**: `1.1`
 
 #### 12. Listar la cantidad de mascotas que pertenecen a una raza a una raza.
+**Version**: `1.0`
+**Version**: `1.1`
 
 ## Tecnologias 💻
 
