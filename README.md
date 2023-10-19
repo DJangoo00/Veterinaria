@@ -1,4 +1,4 @@
-# Veterinaria API
+# Veterinaria API 🐱
 
 Gestion de Veterinaria:
 
@@ -8,20 +8,20 @@ El sistema contará con diferentes módulos que abarcarán áreas clave como el 
 
 El proyecto de administración de veterinaria tiene como objetivo mejorar la eficiencia y la experiencia del cliente, al tiempo que facilita la gestión interna de la veterinaria. Se espera que este sistema contribuya positivamente al crecimiento y éxito del negocio.
 
-## Badges
+## Badges ⚜️
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
 [![.NET](https://img.shields.io/badge/--512BD4?logo=.net&logoColor=ffffff)](https://dotnet.microsoft.com/)
 [![NuGet](https://badgen.net/badge/icon/nuget?icon=nuget&label)](https://https://nuget.org/)
 [![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)](https://learn.microsoft.com/es-es/dotnet/csharp/)
 [![GitHub](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 
-**Table of Contents**
+**Table of Contents**📑
 
 [TOCM]
 
 [TOC]
 
-## Requerimientos Funcionales
+## Requerimientos Funcionales 🌟
 
 1. Autenticación y autorización:
     - El sistema debe implementar protección en los endpoints utilizando JWT (JSON Web Tokens). El token tiene una duracion de 1 minuto.
@@ -32,7 +32,7 @@ El proyecto de administración de veterinaria tiene como objetivo mejorar la efi
 4. El backend debe permitir realizar la paginacion en las peticiones get de todos los controladores.
 5. Los controladores deben implementar 2 versiones diferentes (Query y Header)
 
-## Consultas Propuestas
+## Consultas Propuestas 📋
 
 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
@@ -48,15 +48,35 @@ El proyecto de administración de veterinaria tiene como objetivo mejorar la efi
 12. Listar la cantidad de mascotas que pertenecen a una raza a una raza. 
     Nota: Se debe mostrar una lista de las razas y la cantidad de mascotas que pertenecen a la raza.
 
-## Tecnologias
+## Uso 🕹
+
+
+
+## Endpoints ✅ 
+
+### 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
+### 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
+### 3. Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
+### 4. Listar los propietarios y sus mascotas.
+### 5. Listar los medicamentos que tenga un precio de venta mayor a 50000
+### 6. Listar las mascotas que fueron atendidas por motivo de vacunacion en el primer trimestre del 2023
+### 7. Listar todas las mascotas agrupadas por especie.
+### 8. Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
+### 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
+### 10. Listar los proveedores que me venden un determinado medicamento.
+### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver
+### 12. Listar la cantidad de mascotas que pertenecen a una raza a una raza. 
+
+
+## Tecnologias  💻
 - NetCore 7.0
 - MySQL
 - GitHub
 
-### Lenguajes Usados
+### Lenguajes Usados 💬
 - C#
 
-### Dependencias Usadas
+### Dependencias Usadas 📦
 - "AspNetCoreRateLimit" Version="5.0.0"
 - "AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"
 - "Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12"
@@ -74,7 +94,7 @@ El proyecto de administración de veterinaria tiene como objetivo mejorar la efi
 - "Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"
 - "CsvHelper" Version="30.0.1"
 
-## Estructura de la DataBase
+## Estructura de la DataBase  🧱
 ### SQL
 
 ``` SQL
