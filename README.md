@@ -9,6 +9,7 @@ El sistema contará con diferentes módulos que abarcarán áreas clave como el 
 El proyecto de administración de veterinaria tiene como objetivo mejorar la eficiencia y la experiencia del cliente, al tiempo que facilita la gestión interna de la veterinaria. Se espera que este sistema contribuya positivamente al crecimiento y éxito del negocio.
 
 ## Badges ⚜️
+
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
 [![.NET](https://img.shields.io/badge/--512BD4?logo=.net&logoColor=ffffff)](https://dotnet.microsoft.com/)
 [![NuGet](https://badgen.net/badge/icon/nuget?icon=nuget&label)](https://https://nuget.org/)
@@ -45,59 +46,129 @@ El proyecto de administración de veterinaria tiene como objetivo mejorar la efi
 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
 10. Listar los proveedores que me venden un determinado medicamento.
 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver
-12. Listar la cantidad de mascotas que pertenecen a una raza a una raza. 
-    Nota: Se debe mostrar una lista de las razas y la cantidad de mascotas que pertenecen a la raza.
+12. Listar la cantidad de mascotas que pertenecen a una raza a una raza.
+        Nota: Se debe mostrar una lista de las razas y la cantidad de mascotas que pertenecen a la raza.
+
+## Versiones Disponibles 📈
+
+1. V1.0
+    Incluyen los endpoints genericos y consultas especificas sin paginado
+
+2. V1.1
+    Incluyen los endpoints de consultas genericas con paginacion y especificos con paginacion
+
 
 ## Uso 🕹
 
+Con la API en ejecucion se pueden encontrar 3 grupos principales de endpoints. Relacionados a USUARIOS, genericos y especificos.
+
+### Endpoints de Usuario
+
+#### 1. Registro de Usuario
+Este endpoint permite a los usuarios registrarse en el sistema.
+**Endpoint**: `http://localhost:5051/api/User/register`
+**X-Version**: `1.0`
+```JSON
+{
+    "nombre": "<nombre_de_usuario>",
+    "password": "<password>",
+    "correo": "<Email>"
+}
+
+```
+
+#### 2. Generacion de Tokken
+Una vez registrado el usuario tendrá que ingresar para recibir un token, este será ingresado al siguiente Endpoint que es el de Refresh Token.
+**Endpoint**: `http://localhost:5051/api/User/token`
+**X-Version**: `1.0`
+```JSON
+{
+    "nombre": "<nombre_de_usuario>",
+    "password": "<password>"
+}
+```
+
+####  3. Refresh Token
+Este endpoint permite actualizar el token el cual expira cada minuto.
+
+Se dejan los mismos datos en el Body y luego se ingresa al "Auth", "Bearer", allí se ingresa el token obtenido en el anterior Endpoint.
+**Endpoint**: `http://localhost:5051/api/User/refresh-token`
+**X-Version**: `1.0`
+
+#### 4. Asignacion de Rol
+Permite asignarle un rol diferente al usuario del predeterminado el cual es "empleado"
+**Endpoint**: `http://localhost:5051/api/User/addrole`
+**X-Version**: `1.0`
+```JSON
+{
+    "nombre": "<nombre_de_usuario>",
+    "password": "<password>",
+    "role": "<role>"
+}
+```
 
 
-## Endpoints ✅ 
+### Endpoints Especificos ✅
 
-### 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
-### 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
-### 3. Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
-### 4. Listar los propietarios y sus mascotas.
-### 5. Listar los medicamentos que tenga un precio de venta mayor a 50000
-### 6. Listar las mascotas que fueron atendidas por motivo de vacunacion en el primer trimestre del 2023
-### 7. Listar todas las mascotas agrupadas por especie.
-### 8. Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
-### 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
-### 10. Listar los proveedores que me venden un determinado medicamento.
-### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver
-### 12. Listar la cantidad de mascotas que pertenecen a una raza a una raza. 
+#### 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
 
+#### 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
 
-## Tecnologias  💻
-- NetCore 7.0
-- MySQL
-- GitHub
+#### 3. Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
+
+#### 4. Listar los propietarios y sus mascotas.
+
+#### 5. Listar los medicamentos que tenga un precio de venta mayor a 50000
+
+#### 6. Listar las mascotas que fueron atendidas por motivo de vacunacion en el primer trimestre del 2023
+
+#### 7. Listar todas las mascotas agrupadas por especie.
+
+#### 8. Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
+
+#### 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
+
+#### 10. Listar los proveedores que me venden un determinado medicamento.
+
+#### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver
+
+#### 12. Listar la cantidad de mascotas que pertenecen a una raza a una raza.
+
+## Tecnologias 💻
+
+-   NetCore 7.0
+-   MySQL
+-   GitHub
 
 ### Lenguajes Usados 💬
-- C#
+
+-   C#
 
 ### Dependencias Usadas 📦
-- "AspNetCoreRateLimit" Version="5.0.0"
-- "AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"
-- "Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12"
-- "Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0"
-- "Microsoft.AspNetCore.OpenApi" Version="7.0.12"
-- "Microsoft.EntityFrameworkCore" Version="7.0.12"
-- "Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
-- "Microsoft.Extensions.DependencyInjection" Version="7.0.0"
-- "Swashbuckle.AspNetCore" Version="6.5.0"
-- "System.IdentityModel.Tokens.Jwt" Version="7.0.3"
-- "Microsoft.IdentityModel.Tokens" Version="7.0.3"
-- "Serilog.AspNetCore" Version="7.0.0"
-- "FluentValidation.AspNetCore" Version="11.3.0"
-- "itext7.pdfhtml" Version="5.0.1"
-- "Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"
-- "CsvHelper" Version="30.0.1"
 
-## Estructura de la DataBase  🧱
-### SQL
+-   "AspNetCoreRateLimit" Version="5.0.0"
+-   "AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"
+-   "Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12"
+-   "Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0"
+-   "Microsoft.AspNetCore.OpenApi" Version="7.0.12"
+-   "Microsoft.EntityFrameworkCore" Version="7.0.12"
+-   "Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
+-   "Microsoft.Extensions.DependencyInjection" Version="7.0.0"
+-   "Swashbuckle.AspNetCore" Version="6.5.0"
+-   "System.IdentityModel.Tokens.Jwt" Version="7.0.3"
+-   "Microsoft.IdentityModel.Tokens" Version="7.0.3"
+-   "Serilog.AspNetCore" Version="7.0.0"
+-   "FluentValidation.AspNetCore" Version="11.3.0"
+-   "itext7.pdfhtml" Version="5.0.1"
+-   "Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"
+-   "CsvHelper" Version="30.0.1"
 
-``` SQL
+## Estructura de la DataBase 🧱
+
+> Estructura General.
+
+![](./Readme_Img/DB-structure.png)
+```SQL
 CREATE DATABASE `veterinariadb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 -- veterinariadb.especie definition
 
