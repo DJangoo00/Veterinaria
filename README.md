@@ -70,11 +70,12 @@ Para la implementacion de las versiones se puede realizar desde Header como en l
 Para realizar la paginación se va al apartado de "Query" y se ingresa lo siguiente:
 ![](./Readme_Img/paginado.png.png)
 
-### Endpoints de Usuario
+### Endpoints de Usuario ⚙️
 **Método**: `POST`
 
-#### 1. Registro de Usuario
+#### 1. Registro de Usuario 🎉
 Este endpoint permite a los usuarios registrarse en el sistema.
+
 **Endpoint**: `http://localhost:5051/api/User/register`
 **Version**: `1.0`
 ```JSON
@@ -86,8 +87,9 @@ Este endpoint permite a los usuarios registrarse en el sistema.
 
 ```
 
-#### 2. Generacion de Tokken
+#### 2. Generacion de Tokken ⏳
 Una vez registrado el usuario tendrá que ingresar para recibir un token, este será ingresado al siguiente Endpoint que es el de Refresh Token.
+
 **Endpoint**: `http://localhost:5051/api/User/token`
 **Version**: `1.0`
 ```JSON
@@ -97,17 +99,20 @@ Una vez registrado el usuario tendrá que ingresar para recibir un token, este s
 }
 ```
 
-####  3. Refresh Token
+####  3. Refresh Token ♻️
 Este endpoint permite actualizar el token el cual expira cada minuto.
 
 Se dejan los mismos datos en el Body y luego se ingresa al "Auth", "Bearer", allí se ingresa el token obtenido en el anterior Endpoint.
+
 **Endpoint**: `http://localhost:5051/api/User/refresh-token`
 **Version**: `1.0`
 
-#### 4. Asignacion de Rol
+#### 4. Asignacion de Rol 📜
 Permite asignarle un rol diferente al usuario del predeterminado el cual es "empleado".
+
 **Endpoint**: `http://localhost:5051/api/User/addrole`
 **Version**: `1.0`
+
 ```JSON
 {
     "nombre": "<nombre_de_usuario>",
@@ -118,17 +123,17 @@ Permite asignarle un rol diferente al usuario del predeterminado el cual es "emp
 
 **Otros Endpoints**
 
-- Obtener Todos los Usuarios: GET.
-**Endpoint**: `http://localhost:5165/api//User`
+- Obtener Todos los Usuarios: GET. 🧲
+**Endpoint**: `http://localhost:5051/api//User`
 
-- Obtener Usuario por ID: GET.
-**Endpoint**: `http://localhost:5165/api/User/{id}`
+- Obtener Usuario por ID: GET. 🧲
+**Endpoint**: `http://localhost:5051/api/User/{id}`
 
-- Actualizar Usuario: PUT.
-**Endpoint**: `http://localhost:5165/api/User/{id}`
+- Actualizar Usuario: PUT. ⛓
+**Endpoint**: `http://localhost:5051/api/User/{id}`
 
-- Eliminar Usuario: DELETE.
-**Endpoint**: `http://localhost:5165/api/User/{id}`
+- Eliminar Usuario: DELETE. 🗑
+**Endpoint**: `http://localhost:5051/api/User/{id}`
 
 
 ### Endpoints Especificos ✅
