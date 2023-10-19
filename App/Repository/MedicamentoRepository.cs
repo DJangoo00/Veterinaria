@@ -79,5 +79,22 @@ public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicament
         return (totalRegistros, registros);
     }
 
-    
+    public async Task<(int totalRegistros, IEnumerable<Medicamento> registros)> GetUpperPricePg(int pageIndex, int pageSize, string search)
+    {
+        var query = (
+            from m in _context.Medicamentos
+            select m
+        );
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(l => l.Precio >= int.Parse(search));
+        }
+        query = query.OrderBy(p => p.Id);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (totalRegistros, registros);
+    }
 }

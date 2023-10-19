@@ -97,7 +97,7 @@ public class ProveedorController : BaseApiController
 
     //consultas avanzadas
     //Listar los proveedores que me venden un determinado medicamento.
-    [HttpGet("c10/{name}")]
+    [HttpGet("c10/{medicamento}")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

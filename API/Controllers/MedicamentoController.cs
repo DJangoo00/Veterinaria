@@ -147,7 +147,7 @@ public class MedicamentoController : BaseApiController
 
     //Listar los medicamentos que pertenezcan a el laboratorio Genfar
     
-    [HttpGet("c2pg")]
+    [HttpGet("c2Pg")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -160,17 +160,14 @@ public class MedicamentoController : BaseApiController
 
     //Listar los medicamentos que tenga un precio de venta mayor a 50000
 
-    [HttpGet("c5pg")]
+    [HttpGet("c5Pg")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<MedicamentoDto>>> GetUpperPricePg(int price)
+    public async Task<ActionResult<Pager<MedicamentoDto>>> GetUpperPricePg([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Medicamentos.GetUpperPrice(price);
-        if (entidad == null)
-        {
-            return NotFound();
-        }
-        return mapper.Map<List<MedicamentoDto>>(entidad);
+        var entidad = await unitofwork.Medicamentos.GetUpperPricePg(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<MedicamentoDto>>(entidad.registros);
+        return new Pager<MedicamentoDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }

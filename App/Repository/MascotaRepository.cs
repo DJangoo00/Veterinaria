@@ -82,7 +82,7 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascotaRepository
             from m in _context.Mascotas
             join r in _context.Razas on m.IdRazaFk equals r.Id
             join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
-            where r.Nombre.Contains(raza)
+            where r.Nombre.ToLower().Contains(raza)
             group new { m, r, p } by r.Nombre into especgroup
             select new
             {
@@ -135,7 +135,7 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascotaRepository
             join e in _context.Especies on m.IdEspecieFk equals e.Id
             join p in _context.Propietarios on m.IdPropietarioFk equals p.Id
             join c in _context.Citas on m.Id equals c.IdMascotaFk
-            where c.Motivo.Contains(motivo)
+            where c.Motivo.ToLower().Contains(motivo)
             where c.Fecha.Year == year
             where (c.Fecha.Month >= minMonth && c.Fecha.Month <= maxMonth)
             select new
