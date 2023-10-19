@@ -139,72 +139,85 @@ Para el desarrollo de las consultas se analizaron las variables de estas para da
 #### 1. Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Veterinario/c1/cirujano`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Veterinario/c1Pg?PageSize=2&PageIndex=1&Search=cirujano`
+
 
 #### 2. Listar los medicamentos que pertenezcan a el laboratorio Genfar
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Medicamento/c2/genfar`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Medicamento/c2Pg?PageSize=2&PageIndex=1&Search=genfar`
 
 #### 3. Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Mascota/c3/felina`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Mascota/c3Pg?PageSize=2&PageIndex=1&Search=felina`
 
 #### 4. Listar los propietarios y sus mascotas.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Propietario/c4`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Propietario/c4Pg?PageSize=2&PageIndex=1&Search=propietario`
 
 #### 5. Listar los medicamentos que tenga un precio de venta mayor a 50000
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Medicamento/c5/50000`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Medicamento/c5Pg?PageSize=2&PageIndex=1&Search=50000`
 
 #### 6. Listar las mascotas que fueron atendidas por motivo de vacunacion en el primer trimestre del 2023
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Mascota/c6?motivo=vacunacion&trimestre=4&year=2023`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Mascota/c6Pg?trimestre=1&year=2023&PageSize=2&PageIndex=1&Search=vacunacion`
 
 #### 7. Listar todas las mascotas agrupadas por especie.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Mascota/c7`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Mascota/c7Pg?PageSize=2&PageIndex=1`
 
 #### 8. Listar todos los movimientos de medicamentos y el valor total de cada movimiento.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/MovimientoMedicamento/c8`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/MovimientoMedicamento/c8Pg?PageSize=2&PageIndex=1`
 
 #### 9. Listar las mascotas que fueron atendidas por un determinado veterinario.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Veterinario/c9/veterinario`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Veterinario/c9Pg?PageSize=2&PageIndex=1&Search=veterinario`
 
 #### 10. Listar los proveedores que me venden un determinado medicamento.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Proveedor/c10/medicamento`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Proveedor/c10Pg?PageSize=2&PageIndex=1&Search=medicamento`
 
 #### 11. Listar las mascotas y sus propietarios cuya raza sea Golden Retriver.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Mascota/c11/golden`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Mascota/c11Pg?PageSize=2&PageIndex=1&Search=golden`
 
 #### 12. Listar la cantidad de mascotas que pertenecen a una raza.
 **Version**: `1.0`
 **Endpoint**: `http://localhost:5051/api/Mascota/c12`
+
 **Version**: `1.1`
 **Endpoint**: `http://localhost:5051/api/Mascota/c12Pg?PageSize=2&PageIndex=1`
 
