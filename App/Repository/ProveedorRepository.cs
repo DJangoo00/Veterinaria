@@ -70,7 +70,7 @@ public class ProveedorRepository : GenericRepository<Proveedor>, IProveedorRepos
                 CantidadDisponible = m.CantidadDisponible
                 
             }
-        )/* .Distinct() */;
+        ).Distinct();
         if (!String.IsNullOrEmpty(Search))
         {
             query = query.Where(m => m.NombreMedicamento.ToLower().Contains(Search));

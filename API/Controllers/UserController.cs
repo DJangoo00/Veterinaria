@@ -26,7 +26,7 @@ public class UserController : BaseApiController
 
     //Inicio de los controladores v1.0
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -37,7 +37,7 @@ public class UserController : BaseApiController
     }
 
     [HttpGet("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -52,6 +52,7 @@ public class UserController : BaseApiController
         return this.mapper.Map<UserDto>(entidad);
     }
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
@@ -68,6 +69,7 @@ public class UserController : BaseApiController
 
     //jwt
     [HttpPost("register")]
+    [Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -89,6 +91,7 @@ public class UserController : BaseApiController
     }
     
     [HttpPost("addrole")]
+    [Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -124,7 +127,7 @@ public class UserController : BaseApiController
     //metodos version 1.1
     
     [HttpGet("pagination")]
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
